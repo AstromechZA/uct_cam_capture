@@ -1,0 +1,10 @@
+remote: xxx
+username: xxx
+password: xxx
+remotefolder: xxx
+imagesize:
+    width: 1024
+    height: 768
+thumbsize:
+    width: 128
+    height: 96
