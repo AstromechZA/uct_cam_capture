@@ -31,11 +31,11 @@ Dir.glob(File.join(temp_dir, '*.jpg')) do |f|
 end
 
 # capture image
-stdout,stderr,status = Open3.capture3("raspistill -o #{img_path} -w 1024 -h 768 -q 75 -n")
+stdout,stderr,status = Open3.capture3("raspistill -o #{img_path} -w #{cnf['imagesize']['width']} -h #{cnf['imagesize']['height']} -q 75 -n")
 
 # create thumbnail
 image = Magick::Image.read(img_path).first
-resized = image.resize_to_fit(128, 96)
+resized = image.resize_to_fit(cnf['thumbsize']['width'], cnf['thumbsize']['height'])
 resized.write(thumb_path)
 
 # scp onto server

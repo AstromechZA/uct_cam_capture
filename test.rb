@@ -36,7 +36,7 @@ Magick::Image.read(sample_img).first.write(img_path)
 
 # create thumbnail
 image = Magick::Image.read(img_path).first
-resized = image.resize_to_fit(128, 96)
+resized = image.resize_to_fit(cnf['thumbsize']['width'], cnf['thumbsize']['height'])
 resized.write(thumb_path)
 
 # scp onto server
