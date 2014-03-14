@@ -24,6 +24,7 @@ img = "img#{t}.jpg"
 thumb = "thumb#{t}.jpg"
 img_path = File.join(temp_dir, img)
 thumb_path = File.join(temp_dir, thumb)
+sample_img = File.join(current_dir, 'sample.jpg')
 
 # remove any existing images
 Dir.glob(File.join(temp_dir, '*.jpg')) do |f|
@@ -31,7 +32,7 @@ Dir.glob(File.join(temp_dir, '*.jpg')) do |f|
 end
 
 # capture image
-stdout,stderr,status = Open3.capture3("raspistill -o #{img_path} -w 1024 -h 768 -q 75 -n")
+Magick::Image.read(sample_img).first.write(img_path)
 
 # create thumbnail
 image = Magick::Image.read(img_path).first
