@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.8.0)
+    rmagick (2.13.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  net-scp
+  net-ssh
+  rmagick (= 2.13.2)
