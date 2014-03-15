@@ -24,6 +24,8 @@ img = "img#{t}.jpg"
 thumb = "thumb#{t}.jpg"
 img_path = File.join(temp_dir, img)
 thumb_path = File.join(temp_dir, thumb)
+remote_img_path = File.join(cnf['remoteimgfolder'], '')
+remote_script_path = File.join(cnf['remotescriptfolder'], '')
 
 # remove any existing images
 Dir.glob(File.join(temp_dir, '*.jpg')) do |f|
@@ -40,17 +42,17 @@ resized.write(thumb_path)
 
 # ensure folder exists
 Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
-  ses = ssh.exec!("mkdir #{cnf['remoteimgfolder']}")
+  ses = ssh.exec!("mkdir #{remote_img_path}")
 end
 
 # scp onto server
 Net::SCP.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |scp|
-  scp.upload!(img_path, cnf['remoteimgfolder'])
-  scp.upload!(thumb_path, cnf['remoteimgfolder'])
+  scp.upload!(img_path, remote_img_path)
+  scp.upload!(thumb_path, remote_img_path)
 end
 
 # start script
-script = File.join(cnf['remotescriptfolder'], 'rebuild_img_listing.rb')
+script = File.join(remote_script_path, 'rebuild_img_listing.rb')
 Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
   ses = ssh.exec!("ruby #{script}")
 end
