@@ -39,6 +39,11 @@ image = Magick::Image.read(img_path).first
 resized = image.resize_to_fit(cnf['thumbsize']['width'], cnf['thumbsize']['height'])
 resized.write(thumb_path)
 
+# ensure folder exists
+Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
+  ses = ssh.exec!("mkdir #{cnf['remotefolder']}")
+end
+
 # scp onto server
 Net::SCP.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |scp|
   scp.upload!(img_path, cnf['remotefolder'])
