@@ -50,6 +50,7 @@ Net::SCP.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do
 end
 
 # start script
+script = File.join(cnf['remotescriptfolder'], 'rebuild_img_listing.rb')
 Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
-  ses = ssh.exec!("ruby #{cnf['remotescriptfolder']}rebuild_img_listing.rb")
+  ses = ssh.exec!("ruby #{script}")
 end
