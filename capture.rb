@@ -38,6 +38,7 @@ end
 puts "Capturing #{cnf['imagesize']['width']}x#{cnf['imagesize']['height']} image to #{img_path}"
 begin
   stdout,stderr,status = Open3.capture3("raspistill -o #{img_path} -w #{cnf['imagesize']['width']} -h #{cnf['imagesize']['height']} -q 75 -n")
+  raise 'No image captured' if not File.exists?(img_path)
 rescue
   puts 'Camera not available. Copying non existant image'
   Magick::Image.read(sample_path).first.write(img_path)
