@@ -40,11 +40,16 @@ resized.write(thumb_path)
 
 # ensure folder exists
 Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
-  ses = ssh.exec!("mkdir #{cnf['remotefolder']}")
+  ses = ssh.exec!("mkdir #{cnf['remoteimgfolder']}")
 end
 
 # scp onto server
 Net::SCP.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |scp|
-  scp.upload!(img_path, cnf['remotefolder'])
-  scp.upload!(thumb_path, cnf['remotefolder'])
+  scp.upload!(img_path, cnf['remoteimgfolder'])
+  scp.upload!(thumb_path, cnf['remoteimgfolder'])
+end
+
+# start script
+Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
+  ses = ssh.exec!("ruby #{cnf['remotescriptfolder']}rebuild_img_listing.rb")
 end

@@ -1,7 +1,8 @@
 remote: xxx
 username: xxx
 password: xxx
-remotefolder: xxx
+remoteimgfolder: xxx
+remotescriptfolder: xxx
 imagesize:
     width: 1024
     height: 768
