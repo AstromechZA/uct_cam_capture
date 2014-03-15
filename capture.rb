@@ -71,4 +71,5 @@ puts "Creating ssh connection to #{cnf['username']}@#{cnf['remote']}"
 Net::SSH.start(cnf['remote'], cnf['username'], :password => cnf['password'] ) do |ssh|
   puts "Executing script #{script}"
   ses = ssh.exec!("ruby #{script}")
+  puts ses
 end
